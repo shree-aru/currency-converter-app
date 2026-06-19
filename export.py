@@ -1,4 +1,5 @@
 import csv
+import os
 from history import load_history
 from datetime import datetime
 
@@ -9,7 +10,11 @@ def export_to_csv():
         print("No history available to export.")
         return False
         
-    filename = f"conversion_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    export_dir = "exports"
+    if not os.path.exists(export_dir):
+        os.makedirs(export_dir)
+        
+    filename = os.path.join(export_dir, f"conversion_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv")
     
     with open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
